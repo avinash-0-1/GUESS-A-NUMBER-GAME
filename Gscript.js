@@ -35,11 +35,14 @@ const res = window.matchMedia("(max-width: 600px)");
     if(res.matches){
         temp = 1;
         console.log(temp);
+
+        const mob = document.querySelector('#star');
+        mob.remove();
     }
     else{
         temp=0;
         console.log(temp);
-    } 
+    }    
 
 function validateGuess(guess){
     if(guess > 10){
@@ -53,7 +56,7 @@ function validateGuess(guess){
     }
     else{
         arrGuess.push(guess);
-        if(chances === 11){
+        if(chances >= 10){
             displayGuess(guess);
             displaymsg(`GAME OVER `);
             document.querySelector('.lowHigh').style.color = 'red';
@@ -69,7 +72,7 @@ function validateGuess(guess){
 function displayGuess(guess){
     input.value= '';
     prvGuess.innerHTML += `${guess} `;
-    remaining.innerHTML = `${11 - chances}`;
+    remaining.innerHTML = `${10 - chances}`;
     chances++; 
 }
 
@@ -130,7 +133,6 @@ function responsive2(){
         let color='#';
         for(let i=0 ; i<6 ; i++){
         color+= hex[Math.floor(Math.random() * 16 + 1)]; 
-        console.log(color);
         }
 
         return color;
@@ -166,7 +168,7 @@ function newGame(){
         arrGuess = [];
         input.value='';
         input.removeAttribute('disabled');
-        remaining.innerHTML = `${11 - chances}`;
+        remaining.innerHTML = `${10}`;
         resultPara.removeChild(p);
         prvGuess.innerHTML = '';
         lowHigh.innerHTML = '';
@@ -175,8 +177,10 @@ function newGame(){
         document.querySelector('.lowHigh').style.color = 'black';
         document.querySelector('.main').style.color = '#212121';
         win.pause();
+        win.currentTime = 0;
 
         gamPlay = true;
         count = 1;
+        sound.play();
     })
 }
